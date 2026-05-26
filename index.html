@@ -1,533 +1,94 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Beyoncé Lyric Training</title>
-
-  <style>
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #fff3c4, #f3d7ff, #cdeeff);
-      color: #191927;
-      padding: 24px;
-    }
-
-    .app { max-width: 900px; margin: auto; }
-
-    .hero, .card {
-      background: white;
-      border: 3px solid #191927;
-      border-radius: 26px;
-      box-shadow: 8px 8px 0 #191927;
-      padding: 24px;
-      margin-bottom: 24px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 42px;
-      color: #7c3aed;
-      text-shadow: 2px 2px 0 #ff8ad8;
-    }
-
-    .subtitle { font-weight: 700; line-height: 1.5; }
-
-    .top {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-bottom: 18px;
-    }
-
-    .song { font-size: 24px; font-weight: 900; }
-
-    .focus {
-      color: #7c3aed;
-      font-weight: 900;
-      margin-top: 6px;
-    }
-
-    .score {
-      background: #bde7ff;
-      border: 3px solid #191927;
-      border-radius: 999px;
-      padding: 10px 18px;
-      font-weight: 900;
-      height: fit-content;
-    }
-
-    .video-wrap {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border: 3px solid #191927;
-      border-radius: 20px;
-      overflow: hidden;
-      margin: 18px 0;
-      background: #222;
-      position: relative;
-    }
-
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    .fallback {
-      display: none;
-      position: absolute;
-      inset: 0;
-      background: #252525;
-      color: white;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
-      padding: 24px;
-      z-index: 3;
-    }
-
-    .fallback a {
-      background: #ff0033;
-      color: white;
-      border: 3px solid white;
-      border-radius: 16px;
-      padding: 12px 18px;
-      text-decoration: none;
-      font-weight: 900;
-      margin-top: 12px;
-    }
-
-    .external-link {
-      display: inline-block;
-      background: #ff0033;
-      color: white;
-      border: 3px solid #191927;
-      border-radius: 16px;
-      padding: 12px 18px;
-      text-decoration: none;
-      font-weight: 900;
-      box-shadow: 4px 4px 0 #191927;
-      margin-bottom: 18px;
-    }
-
-    .lyric {
-      background: #f5f0ff;
-      border: 3px dashed #7c3aed;
-      border-radius: 22px;
-      padding: 22px;
-      font-size: 28px;
-      font-weight: 900;
-      line-height: 1.6;
-      margin: 18px 0;
-    }
-
-    .blank {
-      display: inline-flex;
-      min-width: 90px;
-      justify-content: center;
-      align-items: center;
-      background: white;
-      border: 3px solid #191927;
-      border-radius: 14px;
-      padding: 4px 12px;
-      margin: 3px;
-    }
-
-    .answers {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    input {
-      width: 100%;
-      padding: 14px;
-      border: 3px solid #191927;
-      border-radius: 16px;
-      font-weight: 900;
-      font-size: 16px;
-    }
-
-    .buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    button {
-      border: 3px solid #191927;
-      border-radius: 16px;
-      padding: 12px 18px;
-      font-weight: 900;
-      cursor: pointer;
-      box-shadow: 4px 4px 0 #191927;
-    }
-
-    button:hover {
-      transform: translate(2px, 2px);
-      box-shadow: 2px 2px 0 #191927;
-    }
-
-    .check { background: #7c3aed; color: white; }
-    .hint { background: #fff3a6; }
-    .next { background: #ff8ad8; }
-    .reset { background: #bde7ff; }
-
-    .feedback, .hint-box {
-      display: none;
-      margin-top: 16px;
-      border: 3px solid #191927;
-      border-radius: 18px;
-      padding: 14px;
-      font-weight: 900;
-    }
-
-    .correct { display: block; background: #d8ffe8; color: #087a3d; }
-    .wrong { display: block; background: #ffe0e7; color: #ad1537; }
-    .hint-box { background: #fff7bf; }
-
-    .progress {
-      margin-top: 24px;
-      border: 3px solid #191927;
-      border-radius: 22px;
-      padding: 16px;
-    }
-
-    .bar {
-      height: 20px;
-      border: 3px solid #191927;
-      border-radius: 999px;
-      overflow: hidden;
-      margin: 8px 0 16px;
-    }
-
-    .fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #ff8ad8, #7c3aed);
-      transition: .3s;
-    }
-
-    .mini {
-      display: grid;
-      gap: 8px;
-    }
-
-    .mini-item {
-      border: 2px solid #191927;
-      border-radius: 14px;
-      padding: 10px;
-      font-weight: 800;
-      background: white;
-    }
-
-    .mini-item.done { background: #d8ffe8; }
-
-    @media (max-width: 600px) {
-      body { padding: 14px; }
-      h1 { font-size: 32px; }
-      .lyric { font-size: 22px; }
-    }
-  </style>
-</head>
-
-<body>
-  <main class="app">
-    <section class="hero">
-      <h1>Beyoncé Lyric Training</h1>
-      <p class="subtitle">
-        A aluna ouve o trecho, completa os gaps e pratica estruturas com modal verbs.
-      </p>
-    </section>
-
-    <section class="card">
-      <div class="top">
-        <div>
-          <div class="song" id="songTitle"></div>
-          <div class="focus" id="focusText"></div>
-        </div>
-        <div class="score">Score: <span id="score">0</span>/<span id="total"></span></div>
-      </div>
-
-      <a id="externalLink" class="external-link" target="_blank">Abrir trecho no YouTube</a>
-
-      <div class="video-wrap">
-        <iframe id="videoFrame" src="" allowfullscreen></iframe>
-
-        <div class="fallback" id="fallback">
-          <strong>Esse vídeo pode estar bloqueado no player.</strong>
-          <span>Use o botão abaixo para abrir exatamente no trecho.</span>
-          <a id="fallbackLink" target="_blank">Abrir trecho no YouTube</a>
-        </div>
-      </div>
-
-      <div class="lyric" id="lyricBox"></div>
-      <div class="answers" id="answersBox"></div>
-
-      <div class="buttons">
-        <button class="check" onclick="checkAnswer()">Checar resposta</button>
-        <button class="hint" onclick="showHint()">Dica</button>
-        <button class="next" onclick="nextQuestion()">Próxima</button>
-        <button class="reset" onclick="resetGame()">Recomeçar</button>
-      </div>
-
-      <div id="hintBox" class="hint-box"></div>
-      <div id="feedback" class="feedback"></div>
-
-      <div class="progress">
-        <strong>Progresso</strong>
-        <div class="bar"><div class="fill" id="barFill"></div></div>
-        <div class="mini" id="miniList"></div>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    const questions = [
-      {
-        song: "If I Were a Boy",
-        focus: "would + phrasal verb",
-        videoId: "AWpsOqh8q0M",
-        start: 68,
-        lyric: ["I", "GAP", "GAP", "GAP", "my phone"],
-        answers: ["would", "turn", "off"],
-        hint: "Estrutura: would + phrasal verb."
-      },
-      {
-        song: "If I Were a Boy",
-        focus: "would + verb",
-        videoId: "AWpsOqh8q0M",
-        start: 75,
-        lyric: ["I’d", "GAP", "myself first"],
-        answers: ["put"],
-        hint: "I’d = I would."
-      },
-      {
-        song: "Irreplaceable",
-        focus: "will + verb",
-        videoId: "2EwViQxSJJQ",
-        start: 73,
-        lyric: ["I’ll", "GAP", "another you"],
-        answers: ["have"],
-        hint: "I’ll = I will."
-      },
-      {
-        song: "I Was Here",
-        focus: "will + verb",
-        videoId: "i41qWJ6QjPI",
-        start: 81,
-        lyric: ["I", "GAP", "GAP", "my mark"],
-        answers: ["will", "leave"],
-        hint: "Depois de will, usamos o verbo base."
-      },
-      {
-        song: "Rather Die Young",
-        focus: "would rather + verb",
-        videoId: "gyxV4yuYfYw",
-        start: 44,
-        lyric: ["I’d", "GAP", "GAP", "young"],
-        answers: ["rather", "die"],
-        hint: "I’d rather = I would rather."
-      },
-      {
-        song: "Best Thing I Never Had",
-        focus: "will + verb",
-        videoId: "FHp2KgyQUFk",
-        start: 154,
-        lyric: ["I", "GAP", "always", "GAP"],
-        answers: ["will", "be"],
-        hint: "O advérbio pode ficar entre will e o verbo."
-      },
-      {
-        song: "Run the World (Girls)",
-        focus: "will + verb",
-        videoId: "VBmMU_iwe6U",
-        start: 136,
-        lyric: ["Who", "GAP", "GAP", "it for themselves"],
-        answers: ["will", "buy"],
-        hint: "Pergunta com who + will + verbo."
-      },
-      {
-        song: "I Was Here",
-        focus: "will + verb",
-        videoId: "i41qWJ6QjPI",
-        start: 55,
-        lyric: ["I’ll", "GAP", "no regrets"],
-        answers: ["leave"],
-        hint: "I’ll = I will."
-      },
-      {
-        song: "Best Thing I Never Had",
-        focus: "will + verb",
-        videoId: "FHp2KgyQUFk",
-        start: 74,
-        lyric: ["I’ll never", "GAP"],
-        answers: ["be"],
-        hint: "Never fica entre will e o verbo."
-      },
-      {
-        song: "Irreplaceable",
-        focus: "will + verb",
-        videoId: "2EwViQxSJJQ",
-        start: 49,
-        lyric: ["How I’ll never ever", "GAP"],
-        answers: ["find"],
-        hint: "Depois de will, o verbo fica na forma base."
-      }
-    ];
-
-    let current = 0;
-    let score = 0;
-    let completed = Array(questions.length).fill(false);
-    let fallbackTimer = null;
-
-    const songTitle = document.getElementById("songTitle");
-    const focusText = document.getElementById("focusText");
-    const videoFrame = document.getElementById("videoFrame");
-    const fallback = document.getElementById("fallback");
-    const fallbackLink = document.getElementById("fallbackLink");
-    const externalLink = document.getElementById("externalLink");
-    const lyricBox = document.getElementById("lyricBox");
-    const answersBox = document.getElementById("answersBox");
-    const feedback = document.getElementById("feedback");
-    const hintBox = document.getElementById("hintBox");
-    const scoreEl = document.getElementById("score");
-    const totalEl = document.getElementById("total");
-    const barFill = document.getElementById("barFill");
-    const miniList = document.getElementById("miniList");
-
-    totalEl.textContent = questions.length;
-
-    function normalize(text) {
-      return text.trim().toLowerCase().replace(/[’']/g, "").replace(/\s+/g, " ");
-    }
-
-    function getYoutubeWatchUrl(q) {
-      return `https://www.youtube.com/watch?v=${q.videoId}&t=${q.start}s`;
-    }
-
-    function getEmbedUrl(q) {
-      return `https://www.youtube-nocookie.com/embed/${q.videoId}?start=${q.start}&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`;
-    }
-
-    function renderQuestion() {
-      const q = questions[current];
-
-      songTitle.textContent = q.song;
-      focusText.textContent = q.focus;
-
-      const watchUrl = getYoutubeWatchUrl(q);
-      externalLink.href = watchUrl;
-      fallbackLink.href = watchUrl;
-
-      fallback.style.display = "none";
-      videoFrame.src = getEmbedUrl(q);
-
-      clearTimeout(fallbackTimer);
-      fallbackTimer = setTimeout(() => {
-        fallback.style.display = "flex";
-      }, 4500);
-
-      videoFrame.onload = () => {
-        clearTimeout(fallbackTimer);
-      };
-
-      lyricBox.innerHTML = q.lyric.map(part => {
-        return part === "GAP"
-          ? `<span class="blank">____</span>`
-          : `<span>${part}</span>`;
-      }).join(" ");
-
-      answersBox.innerHTML = "";
-
-      q.answers.forEach((_, index) => {
-        const input = document.createElement("input");
-        input.placeholder = `Gap ${index + 1}`;
-        input.autocomplete = "off";
-        answersBox.appendChild(input);
-      });
-
-      feedback.className = "feedback";
-      feedback.style.display = "none";
-      feedback.textContent = "";
-
-      hintBox.style.display = "none";
-      hintBox.textContent = q.hint;
-
-      renderProgress();
-    }
-
-    function checkAnswer() {
-      const q = questions[current];
-      const inputs = [...answersBox.querySelectorAll("input")];
-
-      const isCorrect = inputs.every((input, index) => {
-        return normalize(input.value) === normalize(q.answers[index]);
-      });
-
-      if (isCorrect) {
-        feedback.className = "feedback correct";
-        feedback.textContent = "Certo! Agora ouça de novo e repita a frase inteira.";
-        feedback.style.display = "block";
-
-        if (!completed[current]) {
-          completed[current] = true;
-          score++;
-        }
-      } else {
-        feedback.className = "feedback wrong";
-        feedback.textContent = "Ainda não. Ouça o trecho novamente e tente de novo.";
-        feedback.style.display = "block";
-      }
-
-      updateScore();
-      renderProgress();
-    }
-
-    function showHint() {
-      hintBox.style.display = "block";
-    }
-
-    function nextQuestion() {
-      current = (current + 1) % questions.length;
-      renderQuestion();
-    }
-
-    function resetGame() {
-      current = 0;
-      score = 0;
-      completed = Array(questions.length).fill(false);
-      updateScore();
-      renderQuestion();
-    }
-
-    function updateScore() {
-      scoreEl.textContent = score;
-      barFill.style.width = `${(score / questions.length) * 100}%`;
-    }
-
-    function renderProgress() {
-      miniList.innerHTML = "";
-
-      questions.forEach((q, index) => {
-        const item = document.createElement("div");
-        item.className = "mini-item" + (completed[index] ? " done" : "");
-        item.textContent = `${index + 1}. ${q.song}`;
-        miniList.appendChild(item);
-      });
-    }
-
-    renderQuestion();
-    updateScore();
-  </script>
-</body>
-</html> 
+<script>
+const questions = [
+  {
+    song: "If I Were a Boy",
+    focus: "would + phrasal verb",
+    videoId: "AWpsOqh8q0M",
+    start: 60,
+    lyric: ["I", "GAP", "GAP", "GAP", "my phone"],
+    answers: ["would", "turn", "off"],
+    hint: "Estrutura: would + phrasal verb."
+  },
+  {
+    song: "If I Were a Boy",
+    focus: "would + verb",
+    videoId: "AWpsOqh8q0M",
+    start: 68,
+    lyric: ["I’d", "GAP", "myself first"],
+    answers: ["put"],
+    hint: "I’d = I would."
+  },
+  {
+    song: "Irreplaceable",
+    focus: "will + verb",
+    videoId: "2EwViQxSJJQ",
+    start: 66,
+    lyric: ["I’ll", "GAP", "another you"],
+    answers: ["have"],
+    hint: "I’ll = I will."
+  },
+  {
+    song: "I Was Here",
+    focus: "will + verb",
+    videoId: "i41qWJ6QjPI",
+    start: 74,
+    lyric: ["I", "GAP", "GAP", "my mark"],
+    answers: ["will", "leave"],
+    hint: "Depois de will, usamos o verbo base."
+  },
+  {
+    song: "Rather Die Young",
+    focus: "would rather + verb",
+    videoId: "gyxV4yuYfYw",
+    start: 36,
+    lyric: ["I’d", "GAP", "GAP", "young"],
+    answers: ["rather", "die"],
+    hint: "I’d rather = I would rather."
+  },
+  {
+    song: "Best Thing I Never Had",
+    focus: "will + verb",
+    videoId: "FHp2KgyQUFk",
+    start: 146,
+    lyric: ["I", "GAP", "always", "GAP"],
+    answers: ["will", "be"],
+    hint: "O advérbio pode ficar entre will e o verbo."
+  },
+  {
+    song: "Run the World (Girls)",
+    focus: "will + verb",
+    videoId: "VBmMU_iwe6U",
+    start: 128,
+    lyric: ["Who", "GAP", "GAP", "it for themselves"],
+    answers: ["will", "buy"],
+    hint: "Pergunta com who + will + verbo."
+  },
+  {
+    song: "I Was Here",
+    focus: "will + verb",
+    videoId: "i41qWJ6QjPI",
+    start: 48,
+    lyric: ["I’ll", "GAP", "no regrets"],
+    answers: ["leave"],
+    hint: "I’ll = I will."
+  },
+  {
+    song: "Best Thing I Never Had",
+    focus: "will + verb",
+    videoId: "FHp2KgyQUFk",
+    start: 66,
+    lyric: ["I’ll never", "GAP"],
+    answers: ["be"],
+    hint: "Never fica entre will e o verbo."
+  },
+  {
+    song: "Irreplaceable",
+    focus: "will + verb",
+    videoId: "2EwViQxSJJQ",
+    start: 42,
+    lyric: ["How I’ll never ever", "GAP"],
+    answers: ["find"],
+    hint: "Depois de will, o verbo fica na forma base."
+  }
+];
+</script> 
