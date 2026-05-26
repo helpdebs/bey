@@ -15,38 +15,38 @@
 }
 
 body{
-  background:linear-gradient(135deg,#fff3c4,#f4d9ff,#cfefff);
-  min-height:100vh;
+  background:linear-gradient(135deg,#fff4cb,#f2dcff,#d7f1ff);
   font-family:Arial,sans-serif;
-  color:#191927;
+  min-height:100vh;
   padding:24px;
+  color:#1d1d2a;
 }
 
 .app{
-  max-width:950px;
+  max-width:980px;
   margin:auto;
 }
 
 .hero,
 .card{
   background:white;
-  border:3px solid #191927;
+  border:3px solid #1d1d2a;
   border-radius:28px;
-  box-shadow:8px 8px 0 #191927;
   padding:24px;
+  box-shadow:8px 8px 0 #1d1d2a;
   margin-bottom:24px;
 }
 
 h1{
-  font-size:42px;
+  font-size:44px;
   color:#7c3aed;
   text-shadow:2px 2px 0 #ff8ad8;
   margin-bottom:12px;
 }
 
 .subtitle{
-  font-weight:700;
   line-height:1.6;
+  font-weight:700;
 }
 
 .top{
@@ -54,7 +54,7 @@ h1{
   justify-content:space-between;
   gap:18px;
   flex-wrap:wrap;
-  margin-bottom:18px;
+  margin-bottom:20px;
 }
 
 .song{
@@ -62,15 +62,15 @@ h1{
   font-weight:900;
 }
 
-.focus{
+.meta{
   margin-top:6px;
   color:#7c3aed;
   font-weight:900;
 }
 
 .score{
-  background:#bde7ff;
-  border:3px solid #191927;
+  background:#cfeeff;
+  border:3px solid #1d1d2a;
   border-radius:999px;
   padding:10px 18px;
   font-weight:900;
@@ -83,19 +83,19 @@ h1{
   text-decoration:none;
   background:#ff0033;
   color:white;
-  padding:14px 18px;
   border-radius:18px;
-  border:3px solid #191927;
+  padding:14px 18px;
+  border:3px solid #1d1d2a;
   font-weight:900;
-  box-shadow:4px 4px 0 #191927;
+  box-shadow:4px 4px 0 #1d1d2a;
 }
 
 .video-wrap{
   width:100%;
   aspect-ratio:16/9;
-  border-radius:24px;
   overflow:hidden;
-  border:3px solid #191927;
+  border-radius:24px;
+  border:3px solid #1d1d2a;
   margin-bottom:22px;
   background:black;
 }
@@ -106,76 +106,77 @@ iframe{
   border:none;
 }
 
-.lyric{
-  background:#f5f0ff;
+.lyric-box{
+  background:#f7f0ff;
   border:3px dashed #7c3aed;
   border-radius:24px;
   padding:24px;
   margin-bottom:20px;
 }
 
-.context{
-  display:block;
-  margin-bottom:12px;
-  font-size:20px;
-  color:#51406d;
-  font-weight:800;
+.previous-line{
+  font-size:18px;
+  color:#5a4a73;
+  margin-bottom:14px;
+  font-weight:700;
 }
 
-.main-line{
-  font-size:30px;
+.target-line{
+  font-size:34px;
   line-height:1.7;
   font-weight:900;
 }
 
-.blank{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-width:100px;
-  min-height:54px;
-  border-radius:16px;
-  border:3px solid #191927;
-  background:white;
-  margin:4px;
+.missing{
   color:#7c3aed;
+  letter-spacing:3px;
 }
 
 .answers{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
   gap:12px;
   margin-bottom:20px;
 }
 
-input{
-  width:100%;
+.answer{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.answer label{
+  font-size:14px;
+  font-weight:900;
+}
+
+.answer input{
   padding:14px;
   border-radius:16px;
-  border:3px solid #191927;
+  border:3px solid #1d1d2a;
   font-size:16px;
   font-weight:900;
 }
 
-input:focus{
+.answer input:focus{
   outline:none;
   border-color:#7c3aed;
 }
 
 .buttons{
   display:flex;
-  gap:12px;
   flex-wrap:wrap;
+  gap:12px;
 }
 
 button{
-  cursor:pointer;
   border:none;
+  cursor:pointer;
   border-radius:18px;
-  border:3px solid #191927;
   padding:14px 18px;
+  border:3px solid #1d1d2a;
   font-weight:900;
-  box-shadow:4px 4px 0 #191927;
+  box-shadow:4px 4px 0 #1d1d2a;
 }
 
 .check{
@@ -184,7 +185,7 @@ button{
 }
 
 .hint{
-  background:#fff3a6;
+  background:#fff2a0;
 }
 
 .next{
@@ -192,7 +193,7 @@ button{
 }
 
 .reset{
-  background:#bde7ff;
+  background:#cfeeff;
 }
 
 .feedback,
@@ -201,7 +202,7 @@ button{
   margin-top:16px;
   padding:16px;
   border-radius:18px;
-  border:3px solid #191927;
+  border:3px solid #1d1d2a;
   font-weight:900;
 }
 
@@ -223,7 +224,7 @@ button{
 
 .progress{
   margin-top:24px;
-  border:3px solid #191927;
+  border:3px solid #1d1d2a;
   border-radius:24px;
   padding:18px;
 }
@@ -232,31 +233,31 @@ button{
   height:22px;
   border-radius:999px;
   overflow:hidden;
-  border:3px solid #191927;
+  border:3px solid #1d1d2a;
   margin:10px 0 18px;
 }
 
 .fill{
-  height:100%;
   width:0%;
+  height:100%;
   background:linear-gradient(90deg,#ff8ad8,#7c3aed);
   transition:.3s;
 }
 
-.mini{
+.list{
   display:grid;
   gap:8px;
 }
 
-.mini-item{
+.item{
   background:white;
-  border:2px solid #191927;
+  border:2px solid #1d1d2a;
   border-radius:14px;
   padding:10px;
   font-weight:800;
 }
 
-.mini-item.done{
+.item.done{
   background:#d8ffe8;
 }
 
@@ -270,16 +271,8 @@ button{
     font-size:34px;
   }
 
-  .main-line{
-    font-size:22px;
-  }
-
-  .context{
-    font-size:17px;
-  }
-
-  .blank{
-    min-width:80px;
+  .target-line{
+    font-size:24px;
   }
 
 }
@@ -296,7 +289,7 @@ button{
 <h1>Beyoncé Lyric Training</h1>
 
 <p class="subtitle">
-Ouça o trecho, complete os gaps e pratique modal verbs com chunks reais.
+Ouça o trecho, entenda o contexto da frase anterior e complete as palavras faltando.
 </p>
 
 </section>
@@ -307,7 +300,7 @@ Ouça o trecho, complete os gaps e pratique modal verbs com chunks reais.
 
 <div>
 <div class="song" id="songTitle"></div>
-<div class="focus" id="focusText"></div>
+<div class="meta" id="metaText"></div>
 </div>
 
 <div class="score">
@@ -318,7 +311,7 @@ Score:
 </div>
 
 <a
-id="externalLink"
+id="youtubeBtn"
 class="youtube-btn"
 target="_blank"
 >
@@ -335,7 +328,13 @@ allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; pic
 
 </div>
 
-<div class="lyric" id="lyricBox"></div>
+<div class="lyric-box">
+
+<div class="previous-line" id="previousLine"></div>
+
+<div class="target-line" id="targetLine"></div>
+
+</div>
 
 <div class="answers" id="answersBox"></div>
 
@@ -367,10 +366,10 @@ Recomeçar
 <strong>Progresso</strong>
 
 <div class="bar">
-<div class="fill" id="barFill"></div>
+<div class="fill" id="fill"></div>
 </div>
 
-<div class="mini" id="miniList"></div>
+<div class="list" id="progressList"></div>
 
 </div>
 
@@ -386,22 +385,17 @@ const questions = [
 
 song:"If I Were a Boy",
 
-focus:"would + phrasal verb",
+structure:"would + phrasal verb",
 
 videoId:"AWpsOqh8q0M",
 
-/* TIMESTAMP CORRIGIDO */
-start:102,
+start:101,
 
-context:"And everything you had got destroyed / If I were a boy",
+previous:
+"And everything you had got destroyed",
 
-lyric:[
-"I",
-"GAP",
-"GAP",
-"GAP",
-"my phone"
-],
+target:
+"If I * * * my phone",
 
 answers:[
 "would",
@@ -409,7 +403,14 @@ answers:[
 "off"
 ],
 
-hint:"would + phrasal verb"
+labels:[
+"Modal verb",
+"Verb",
+"Phrasal particle"
+],
+
+hint:
+"would + phrasal verb"
 
 },
 
@@ -417,25 +418,28 @@ hint:"would + phrasal verb"
 
 song:"If I Were a Boy",
 
-focus:"would + verb",
+structure:"would + verb",
 
 videoId:"AWpsOqh8q0M",
 
-start:111,
+start:110,
 
-context:"I'd listen to her",
+previous:
+"I'd listen to her",
 
-lyric:[
-"I’d",
-"GAP",
-"myself first"
-],
+target:
+"I’d * myself first",
 
 answers:[
 "put"
 ],
 
-hint:"I’d = I would"
+labels:[
+"Verb"
+],
+
+hint:
+"I’d = I would"
 
 },
 
@@ -443,25 +447,28 @@ hint:"I’d = I would"
 
 song:"Irreplaceable",
 
-focus:"will + verb",
+structure:"will + verb",
 
 videoId:"2EwViQxSJJQ",
 
-start:114,
+start:113,
 
-context:"Don't you ever for a second get to thinking",
+previous:
+"Don't you ever for a second get to thinking",
 
-lyric:[
-"I’ll",
-"GAP",
-"another you"
-],
+target:
+"I’ll * another you",
 
 answers:[
 "have"
 ],
 
-hint:"I’ll = I will"
+labels:[
+"Verb"
+],
+
+hint:
+"I’ll = I will"
 
 }
 
@@ -472,17 +479,18 @@ let score = 0;
 let completed = Array(questions.length).fill(false);
 
 const songTitle = document.getElementById("songTitle");
-const focusText = document.getElementById("focusText");
+const metaText = document.getElementById("metaText");
 const videoFrame = document.getElementById("videoFrame");
-const lyricBox = document.getElementById("lyricBox");
+const previousLine = document.getElementById("previousLine");
+const targetLine = document.getElementById("targetLine");
 const answersBox = document.getElementById("answersBox");
 const feedback = document.getElementById("feedback");
 const hintBox = document.getElementById("hintBox");
 const scoreEl = document.getElementById("score");
 const totalEl = document.getElementById("total");
-const barFill = document.getElementById("barFill");
-const miniList = document.getElementById("miniList");
-const externalLink = document.getElementById("externalLink");
+const fill = document.getElementById("fill");
+const progressList = document.getElementById("progressList");
+const youtubeBtn = document.getElementById("youtubeBtn");
 
 totalEl.textContent = questions.length;
 
@@ -513,49 +521,37 @@ function renderQuestion(){
 const q = questions[current];
 
 songTitle.textContent = q.song;
-focusText.textContent = q.focus;
-
-externalLink.href = getYoutubeLink(q);
+metaText.textContent = q.structure;
 
 videoFrame.src = getEmbedLink(q);
 
-const contextHtml = q.context
-? `<span class="context">${q.context}</span>`
-: "";
+youtubeBtn.href = getYoutubeLink(q);
 
-const lyricHtml = q.lyric.map(part => {
+previousLine.textContent = q.previous;
 
-return part === "GAP"
-? `<span class="blank">____</span>`
-: `<span>${part}</span>`;
-
-}).join(" ");
-
-lyricBox.innerHTML = `
-${contextHtml}
-<div class="main-line">
-${lyricHtml}
-</div>
-`;
+targetLine.innerHTML = q.target.replaceAll(
+"*",
+`<span class="missing">____</span>`
+);
 
 answersBox.innerHTML = "";
 
-q.answers.forEach((_,index)=>{
+q.answers.forEach((answer,index)=>{
 
-const input = document.createElement("input");
+const div = document.createElement("div");
 
-input.placeholder = `Gap ${index + 1}`;
-input.autocomplete = "off";
+div.className = "answer";
 
-input.addEventListener("keydown",(e)=>{
+div.innerHTML = `
+<label>${q.labels[index]}</label>
+<input
+type="text"
+placeholder="Type here..."
+autocomplete="off"
+/>
+`;
 
-if(e.key === "Enter"){
-checkAnswer();
-}
-
-});
-
-answersBox.appendChild(input);
+answersBox.appendChild(div);
 
 });
 
@@ -643,21 +639,20 @@ function updateScore(){
 
 scoreEl.textContent = score;
 
-const percent = (score / questions.length) * 100;
-
-barFill.style.width = `${percent}%`;
+fill.style.width =
+`${(score / questions.length) * 100}%`;
 
 }
 
 function renderProgress(){
 
-miniList.innerHTML = "";
+progressList.innerHTML = "";
 
 questions.forEach((q,index)=>{
 
 const item = document.createElement("div");
 
-item.className = "mini-item";
+item.className = "item";
 
 if(completed[index]){
 
@@ -665,9 +660,10 @@ item.classList.add("done");
 
 }
 
-item.textContent = `${index + 1}. ${q.song}`;
+item.textContent =
+`${index + 1}. ${q.song}`;
 
-miniList.appendChild(item);
+progressList.appendChild(item);
 
 });
 
@@ -679,4 +675,4 @@ updateScore();
 </script>
 
 </body>
-</html>
+</html> 
