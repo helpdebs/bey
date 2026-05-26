@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beyoncé Lyric Training</title>
+
+  <style>
+    :root {
+      --purple: #7c3aed;
+      --pink: #ff8ad8;
+      --blue: #bde7ff;
+      --yellow: #fff3a6;
+      --white: #ffffff;
+      --black: #1f1f29;
+      --gray: #f5f3ff;
+      --red: #ff5f7e;
+      --green: #40c97b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, #ffe1f6 0, transparent 35%),
+        radial-gradient(circle at bottom right, #c9efff 0, transparent 35%),
+        linear-gradient(135deg, #fff8ce, #f7edff);
+      color: var(--black);
+      padding: 24px;
+    }
+
+    .app {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      background: rgba(255, 255, 255, 0.85);
+      border: 3px solid var(--black);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--black);
+      margin-bottom: 22px;
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--yellow);
+      border: 2px solid var(--black);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 0.95;
+      color: var(--purple);
+      text-shadow: 2px 2px 0 var(--pink);
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      max-width: 680px;
+      margin-top: 14px;
+      line-height: 1.5;
+    }
+
+    .game-card {
+      background: var(--white);
+      border: 3px solid var(--black);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--black);
+    }
+
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .pill {
+      background: var(--blue);
+      border: 2px solid var(--black);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-weight: 800;
+    }
+
+    .song-title {
+      font-size: 1.5rem;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .focus {
+      font-weight: 800;
+      color: var(--purple);
+      margin-bottom: 18px;
+    }
+
+    .youtube-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #ff0033;
+      color: white;
+      border: 3px solid var(--black);
+      border-radius: 16px;
+      padding: 12px 18px;
+      text-decoration: none;
+      font-weight: 900;
+      box-shadow: 4px 4px 0 var(--black);
+      margin-bottom: 22px;
+    }
+
+    .youtube-btn:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--black);
+    }
+
+    .instruction {
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .lyric-box {
+      background: var(--gray);
+      border: 3px dashed var(--purple);
+      border-radius: 22px;
+      padding: 22px;
+      font-size: clamp(1.4rem, 4vw, 2.3rem);
+      font-weight: 900;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    .blank {
+      display: inline-flex;
+      min-width: 110px;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      border: 3px solid var(--black);
+      border-radius: 14px;
+      margin: 4px;
+      padding: 4px 12px;
+      color: var(--purple);
+    }
+
+    .answers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .answer-input {
+      width: 100%;
+      padding: 14px;
+      border: 3px solid var(--black);
+      border-radius: 16px;
+      font-size: 1rem;
+      font-weight: 800;
+      outline: none;
+    }
+
+    .answer-input:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 4px #d9c4ff;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    button {
+      border: 3px solid var(--black);
+      border-radius: 16px;
+      padding: 12px 18px;
+      font-weight: 900;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 var(--black);
+    }
+
+    button:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--black);
+    }
+
+    .check-btn {
+      background: var(--purple);
+      color: white;
+    }
+
+    .hint-btn {
+      background: var(--yellow);
+    }
+
+    .next-btn {
+      background: var(--pink);
+    }
+
+    .reset-btn {
+      background: var(--blue);
+    }
+
+    .feedback {
+      margin-top: 18px;
+      padding: 16px;
+      border: 3px solid var(--black);
+      border-radius: 18px;
+      font-weight: 900;
+      display: none;
+    }
+
+    .feedback.correct {
+      display: block;
+      background: #d8ffe8;
+      color: #087a3d;
+    }
+
+    .feedback.wrong {
+      display: block;
+      background: #ffe0e7;
+      color: #ad1537;
+    }
+
+    .hint-box {
+      display: none;
+      margin-top: 14px;
+      background: #fff7bf;
+      border: 3px solid var(--black);
+      border-radius: 18px;
+      padding: 14px;
+      font-weight: 700;
+    }
+
+    .full-answer {
+      margin-top: 16px;
+      background: #efe6ff;
+      border: 3px solid var(--black);
+      border-radius: 18px;
+      padding: 14px;
+      display: none;
+      font-weight: 800;
+    }
+
+    .progress-area {
+      margin-top: 24px;
+      background: white;
+      border: 3px solid var(--black);
+      border-radius: 22px;
+      padding: 16px;
+    }
+
+    .bar {
+      width: 100%;
+      height: 22px;
+      border: 3px solid var(--black);
+      border-radius: 999px;
+      overflow: hidden;
+      background: #eee;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--pink), var(--purple));
+      transition: width 0.3s;
+    }
+
+    .mini-list {
+      margin-top: 18px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .mini-item {
+      background: #fafafa;
+      border: 2px solid var(--black);
+      border-radius: 14px;
+      padding: 10px;
+      font-weight: 700;
+    }
+
+    .mini-item.done {
+      background: #d8ffe8;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 14px;
+      }
+
+      .hero,
+      .game-card {
+        box-shadow: 5px 5px 0 var(--black);
+        padding: 18px;
+      }
+
+      .blank {
+        min-width: 80px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+    <section class="hero">
+      <span class="tag">Lyric Training Game</span>
+      <h1>Beyoncé Modal Verbs</h1>
+      <p class="subtitle">
+        Ouça o trecho, complete os gaps e treine combinações como
+        <strong>would + verb</strong>, <strong>will + verb</strong> e
+        <strong>would rather + verb</strong>.
+      </p>
+    </section>
+
+    <section class="game-card">
+      <div class="top-row">
+        <div>
+          <div class="song-title" id="songTitle"></div>
+          <div class="focus" id="focusText"></div>
+        </div>
+
+        <div class="pill">
+          Score: <span id="score">0</span> / <span id="total"></span>
+        </div>
+      </div>
+
+      <a id="youtubeLink" class="youtube-btn" href="#" target="_blank">
+        ▶ Ouvir trecho no YouTube
+      </a>
+
+      <div class="instruction">
+        Complete as lacunas na ordem correta:
+      </div>
+
+      <div class="lyric-box" id="lyricBox"></div>
+
+      <div class="answers" id="answersBox"></div>
+
+      <div class="buttons">
+        <button class="check-btn" onclick="checkAnswer()">Checar resposta</button>
+        <button class="hint-btn" onclick="showHint()">Dica</button>
+        <button class="next-btn" onclick="nextQuestion()">Próxima</button>
+        <button class="reset-btn" onclick="resetGame()">Recomeçar</button>
+      </div>
+
+      <div class="hint-box" id="hintBox"></div>
+      <div class="feedback" id="feedback"></div>
+      <div class="full-answer" id="fullAnswer"></div>
+
+      <div class="progress-area">
+        <strong>Progresso</strong>
+        <div class="bar">
+          <div class="bar-fill" id="barFill"></div>
+        </div>
+
+        <div class="mini-list" id="miniList"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const questions = [
+      {
+        song: "If I Were a Boy",
+        focus: "would + phrasal verb",
+        youtube: "https://www.youtube.com/watch?v=AWpsOqh8q0M&t=68s",
+        lyric: ["I", "GAP", "GAP", "GAP", "my phone"],
+        answers: ["would", "turn", "off"],
+        full: "I would turn off my phone.",
+        hint: "A estrutura é would + phrasal verb. O verbo tem duas partes: turn + off."
+      },
+      {
+        song: "If I Were a Boy",
+        focus: "would + verb",
+        youtube: "https://www.youtube.com/watch?v=AWpsOqh8q0M&t=75s",
+        lyric: ["I’d", "GAP", "myself first"],
+        answers: ["put"],
+        full: "I’d put myself first.",
+        hint: "I’d = I would. Depois vem o verbo principal."
+      },
+      {
+        song: "Irreplaceable",
+        focus: "will + verb",
+        youtube: "https://www.youtube.com/watch?v=Rb7sVoMYuFc&t=73s",
+        lyric: ["I’ll", "GAP", "another you"],
+        answers: ["have"],
+        full: "I’ll have another you.",
+        hint: "I’ll = I will. Depois vem o verbo base."
+      },
+      {
+        song: "I Was Here",
+        focus: "will + verb",
+        youtube: "https://www.youtube.com/watch?v=i41qWJ6QjPI&t=81s",
+        lyric: ["I", "GAP", "GAP", "my mark"],
+        answers: ["will", "leave"],
+        full: "I will leave my mark.",
+        hint: "Aqui o modal aparece completo: will + leave."
+      },
+      {
+        song: "Rather Die Young",
+        focus: "would rather + verb",
+        youtube: "https://www.youtube.com/results?search_query=Beyonce+Rather+Die+Young+official+audio",
+        lyric: ["I’d", "GAP", "GAP", "young"],
+        answers: ["rather", "die"],
+        full: "I’d rather die young.",
+        hint: "I’d rather = I would rather. Depois vem o verbo principal."
+      },
+      {
+        song: "Best Thing I Never Had",
+        focus: "will + verb",
+        youtube: "https://www.youtube.com/watch?v=FHp2KgyQUFk&t=154s",
+        lyric: ["I", "GAP", "always", "GAP"],
+        answers: ["will", "be"],
+        full: "I will always be...",
+        hint: "A estrutura é will + be. O advérbio always fica no meio."
+      },
+      {
+        song: "Run the World (Girls)",
+        focus: "will + verb",
+        youtube: "https://www.youtube.com/watch?v=VBmMU_iwe6U&t=136s",
+        lyric: ["Who", "GAP", "GAP", "it for themselves"],
+        answers: ["will", "buy"],
+        full: "Who will buy it for themselves?",
+        hint: "Pergunta com will: who + will + verbo."
+      },
+      {
+        song: "I Was Here",
+        focus: "will + verb",
+        youtube: "https://www.youtube.com/watch?v=i41qWJ6QjPI&t=55s",
+        lyric: ["I’ll", "GAP", "no regrets"],
+        answers: ["leave"],
+        full: "I’ll leave no regrets.",
+        hint: "I’ll = I will. Falta o verbo depois do modal."
+      },
+      {
+        song: "Best Thing I Never Had",
+        focus: "will + verb",
+        youtube: "https://www.youtube.com/watch?v=FHp2KgyQUFk&t=74s",
+        lyric: ["I’ll never", "GAP"],
+        answers: ["be"],
+        full: "I’ll never be...",
+        hint: "Never fica entre will e o verbo principal."
+      },
+      {
+        song: "Irreplaceable",
+        focus: "will + verb",
+        youtube: "https://www.youtube.com/watch?v=Rb7sVoMYuFc&t=49s",
+        lyric: ["How I’ll never ever", "GAP"],
+        answers: ["find"],
+        full: "How I’ll never ever find...",
+        hint: "Depois de will, o verbo fica na forma base."
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let completed = Array(questions.length).fill(false);
+
+    const songTitle = document.getElementById("songTitle");
+    const focusText = document.getElementById("focusText");
+    const youtubeLink = document.getElementById("youtubeLink");
+    const lyricBox = document.getElementById("lyricBox");
+    const answersBox = document.getElementById("answersBox");
+    const feedback = document.getElementById("feedback");
+    const hintBox = document.getElementById("hintBox");
+    const fullAnswer = document.getElementById("fullAnswer");
+    const scoreEl = document.getElementById("score");
+    const totalEl = document.getElementById("total");
+    const barFill = document.getElementById("barFill");
+    const miniList = document.getElementById("miniList");
+
+    totalEl.textContent = questions.length;
+
+    function renderQuestion() {
+      const q = questions[current];
+
+      songTitle.textContent = q.song;
+      focusText.textContent = q.focus;
+      youtubeLink.href = q.youtube;
+
+      lyricBox.innerHTML = q.lyric.map(part => {
+        if (part === "GAP") {
+          return `<span class="blank">____</span>`;
+        }
+        return `<span>${part}</span>`;
+      }).join(" ");
+
+      answersBox.innerHTML = "";
+
+      q.answers.forEach((answer, index) => {
+        const input = document.createElement("input");
+        input.className = "answer-input";
+        input.placeholder = `Gap ${index + 1}`;
+        input.dataset.answer = answer;
+        answersBox.appendChild(input);
+      });
+
+      feedback.className = "feedback";
+      feedback.style.display = "none";
+      feedback.textContent = "";
+
+      hintBox.style.display = "none";
+      hintBox.textContent = q.hint;
+
+      fullAnswer.style.display = "none";
+      fullAnswer.textContent = "Resposta: " + q.full;
+
+      renderProgress();
+    }
+
+    function normalize(text) {
+      return text
+        .trim()
+        .toLowerCase()
+        .replace(/[’']/g, "")
+        .replace(/\s+/g, " ");
+    }
+
+    function checkAnswer() {
+      const q = questions[current];
+      const inputs = [...document.querySelectorAll(".answer-input")];
+
+      const isCorrect = inputs.every((input, index) => {
+        return normalize(input.value) === normalize(q.answers[index]);
+      });
+
+      if (isCorrect) {
+        feedback.className = "feedback correct";
+        feedback.style.display = "block";
+        feedback.textContent = "Perfeito! Agora canta a frase inteira em voz alta.";
+
+        fullAnswer.style.display = "block";
+
+        if (!completed[current]) {
+          completed[current] = true;
+          score++;
+        }
+      } else {
+        feedback.className = "feedback wrong";
+        feedback.style.display = "block";
+        feedback.textContent = "Ainda não. Ouça o trecho de novo e confira a ordem dos gaps.";
+      }
+
+      updateScore();
+      renderProgress();
+    }
+
+    function showHint() {
+      hintBox.style.display = "block";
+    }
+
+    function nextQuestion() {
+      current++;
+
+      if (current >= questions.length) {
+        current = 0;
+      }
+
+      renderQuestion();
+    }
+
+    function resetGame() {
+      current = 0;
+      score = 0;
+      completed = Array(questions.length).fill(false);
+      updateScore();
+      renderQuestion();
+    }
+
+    function updateScore() {
+      scoreEl.textContent = score;
+      const percent = (score / questions.length) * 100;
+      barFill.style.width = percent + "%";
+    }
+
+    function renderProgress() {
+      miniList.innerHTML = "";
+
+      questions.forEach((q, index) => {
+        const item = document.createElement("div");
+        item.className = "mini-item" + (completed[index] ? " done" : "");
+        item.textContent = `${index + 1}. ${q.song} — ${q.focus}`;
+        miniList.appendChild(item);
+      });
+    }
+
+    renderQuestion();
+    updateScore();
+  </script>
+</body>
+</html>
